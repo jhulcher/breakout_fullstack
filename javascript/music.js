@@ -40,20 +40,35 @@ function playNote (freq) {
 }
 
 function noteMaker (datum) {
-  if (datum === 7) {
-    // this note is correct for a serve
+  if (datum === 8) {
+    var sound = new note(60);
+    sound.start();
+    setTimeout(function () {
+      sound.stop();
+    }, 84);
+    setTimeout(function () {
+      var sound2 = new note(60);
+      sound2.start();
+      setTimeout(function () {
+        sound2.stop();
+      }, 84);
+    }, 100);
+    setTimeout(function () {
+      var sound3 = new note(60);
+      sound3.start();
+      setTimeout(function () {
+        sound3.stop();
+      }, 84);
+    }, 200);
+  } else if (datum === 7) {
     playNote(1050);
   } else if (datum === 6) {
-    // this note is correct for hitting the paddle
     playNote(530);
   } else if (datum === 5) {
-    // this note is correct for hitting the lowest row
     playNote(300);
   } else if (datum === 4) {
-    // this note is correct for hitting the light green row
     playNote(370);
   } else if (datum === 3) {
-    // not sure if this note is correct for dark green row
     playNote(410);
   } else if (datum === 2) {
     playNote(450);

@@ -22,7 +22,7 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 var titleOver = true;
-var titleSequence = canvas.height + 35;
+var startSequence = canvas.height + 35;
 var titleVert = canvas.height;
 var levelTwoTimer = 0;
 
@@ -31,7 +31,7 @@ var y = canvas.height - 20;
 
 var ballDirectionX = 3;
 var ballDirectionY = -3;
-var ballRadius = 10;
+var ballSize = 10;
 
 var paddleHeight = 10;
 var paddleWidth = 125;
@@ -47,10 +47,11 @@ var blockWidth = 40;
 var blockHeight = 15;
 var blockPadding = 0;
 var cornerRadius = 10;
-var blockOffsetTop = 135;
-var blockOffsetLeft = 40;
+var blocksTopPadding = 135;
+var blocksLeftPadding = 40;
 var blocks = [];
 
+var begin = false;
 var textSize = 0;
 var offset = 10;
 var colors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
@@ -58,15 +59,14 @@ var colors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
               "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
               "#660000", "#4C0000", "#320000", "#180000"];
 
+var startColors = ["#FDCDA9", "#FDC297", "#FDB885", "#FDAE73", "#FDA361",
+                   "#FC994F", "#FC8E3D", "#FC842B", "#FC7A19", "#FC6F07",
+                   "#FC7A19", "#FC842B", "#FC8E3D", "#FC994F", "#FDA361",
+                   "#FDAE73", "#FDB885", "#FDC297", "#FDCDA9"];
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-// document.addEventListener("mousemove", mouseMoveHandler, false);
-// function mouseMoveHandler (e) {
-//   var relativeX = e.clientX - canvas.offsetLeft;
-//   if (relativeX > 10 && relativeX < canvas.width - 10) {
-//     paddleX = relativeX - paddleWidth / 2;
-//   }
-// }
+document.addEventListener("mousemove", mouseMoveHandler, false);
 
 function drawWalls() {
   // left wall
@@ -127,8 +127,8 @@ function drawBlocks () {
   for (var c = 0; c < blockColumnCount; c++) {
     for (var r = 0; r < blockRowCount; r++) {
       if (blocks[c][r].status > 0) {
-        var blockX = (c * (blockWidth + blockPadding)) + blockOffsetLeft;
-        var blockY = (r * (blockHeight + blockPadding)) + blockOffsetTop;
+        var blockX = (c * (blockWidth + blockPadding)) + blocksLeftPadding;
+        var blockY = (r * (blockHeight + blockPadding)) + blocksTopPadding;
         blocks[c][r].x = blockX;
         blocks[c][r].y = blockY;
         ctx.beginPath();
@@ -149,6 +149,10 @@ function keyDownHandler (e) {
     leftPressed = true;
     paddleDirection = "left";
   }
+  if (e.keyCode === 13) {
+    begin = true;
+    startSequence = 200;
+  }
 }
 
 function keyUpHandler (e) {
@@ -156,6 +160,13 @@ function keyUpHandler (e) {
     rightPressed = false;
   } else if (e.keyCode === 37) {
     leftPressed = false;
+  }
+}
+
+function mouseMoveHandler (e) {
+  var mouseX = e.clientX - canvas.offsetLeft;
+  if (mouseX > paddleWidth / 2 && mouseX < canvas.width - (paddleWidth / 2)) {
+    paddleX = mouseX - paddleWidth / 2;
   }
 }
 
@@ -208,25 +219,25 @@ function collisionDetection () {
                 explode();
          } else if (
           // touching top of block
-              (x + ballDirectionX > b.x - 19) &&
-              (x + ballDirectionX < (b.x + (blockWidth + 10))) &&
-              (y + ballDirectionY + 4 < b.y) &&
-              (y + ballDirectionY + 4 > (b.y - 7)) &&
-              (y + ballDirectionY < b.y) &&
-              (ballDirectionY > 0)) {
-                  if (r > 0 && (blocks[c][r - 1].status === 0)) {
-                   noteMaker(r);
-                   ballDirectionY = -ballDirectionY;
-                   b.status = 0;
-                   createBasicExplosion(b.x, b.y, b.color);
-                   explode();
-                 } else if (r === 0) {
-                   noteMaker(r);
-                   ballDirectionY = -ballDirectionY;
-                   b.status = 0;
-                   createBasicExplosion(b.x, b.y, b.color);
-                   explode();
-                 }
+            (x + ballDirectionX > b.x - 19) &&
+            (x + ballDirectionX < (b.x + (blockWidth + 10))) &&
+            (y + ballDirectionY + 4 < b.y) &&
+            (y + ballDirectionY + 4 > (b.y - 7)) &&
+            (y + ballDirectionY < b.y) &&
+            (ballDirectionY > 0)) {
+                if (r > 0 && (blocks[c][r - 1].status === 0)) {
+                 noteMaker(r);
+                 ballDirectionY = -ballDirectionY;
+                 b.status = 0;
+                 createBasicExplosion(b.x, b.y, b.color);
+                 explode();
+               } else if (r === 0) {
+                 noteMaker(r);
+                 ballDirectionY = -ballDirectionY;
+                 b.status = 0;
+                 createBasicExplosion(b.x, b.y, b.color);
+                 explode();
+               }
          }
          if (b.status === 0) {
            if (r === 5) {
@@ -312,47 +323,55 @@ function drawTitle () {
     color = colors.shift();
     colors.push(color);
   }
-    ctx.font = textSize + "px Imagine";
-    ctx.font = textSize;
-    ctx.fillStyle = color;
-    ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
   if (titleVert > 265) {
     textSize += 1.25;
     offset += 3.5;
   }
+  ctx.font = textSize + "px Imagine";
+  ctx.font = textSize;
+  ctx.fillStyle = color;
+  ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
 }
 
 function draw () {
-  if (titleSequence <= 200) {
+  if (startSequence <= 200) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
-  // start the title sequence
-  if (titleSequence > 200) {
+
+  if (begin === false) {
     drawTitle();
     if (titleVert > 264) {
       titleVert -= 3;
     }
-    titleSequence -= 1;
+    var startColor = startColors.shift();
+    startColors.push(startColor);
+    setTimeout(function () {
+      ctx.font = "35px Imagine";
+      ctx.fillStyle = startColor;
+      ctx.fillText("Press Enter", 178, titleVert + 95);
+    }, 2600);
   }
   // level 1 title
-  if (titleSequence <= 200 && titleSequence > 50) {
-    drawWalls();
-    drawBlocks();
-    drawScore();
-    drawLives();
-    drawLevel();
-    if (titleSequence < 150) {
-      ctx.font = "50px Imagine";
-      ctx.fillStyle = "#484947";
-      ctx.fillText("Wall 1", 230, titleVert + 15);
-    }
-    titleSequence -= 1;
-    if (titleSequence === 50) {
-      noteMaker(7);
+  if (begin === true) {
+    if (startSequence <= 200 && startSequence > 50) {
+      drawWalls();
+      drawBlocks();
+      drawScore();
+      drawLives();
+      drawLevel();
+      if (startSequence < 150) {
+        ctx.font = "50px Imagine";
+        ctx.fillStyle = "#484947";
+        ctx.fillText("Wall 1", 230, titleVert + 15);
+      }
+      startSequence -= 1;
+      if (startSequence === 50) {
+        noteMaker(7);
+      }
     }
   }
   // after title sequence is over play game
-  if (titleSequence <= 50) {
+  if (startSequence <= 50) {
     drawWalls();
     drawBall();
     drawPaddle();
@@ -378,14 +397,14 @@ function draw () {
     }, 5000);
   }
   // ball hits sides of screen
-  if (x + ballDirectionX > ((canvas.width - ballRadius) - 40) ||
-      x + ballDirectionX < (ballRadius + 29)) {
+  if (x + ballDirectionX > ((canvas.width - ballSize) - 40) ||
+      x + ballDirectionX < (ballSize + 29)) {
     noteMaker(7);
     ballDirectionX = -ballDirectionX;
   }
   // ball hits top of screen
-  if (y + ballDirectionY < ballRadius + 71 &&
-      y + ballDirectionY > ballRadius + 65) {
+  if (y + ballDirectionY < ballSize + 71 &&
+      y + ballDirectionY > ballSize + 65) {
     noteMaker(7);
     ballDirectionY = -ballDirectionY;
   }
@@ -450,6 +469,7 @@ function draw () {
   }
   // if ball is lost at bottom of screen
   if ((y + ballDirectionY) > (canvas.height )) {
+    noteMaker(8);
     x = 300;
     y = -11;
     lives -= 1;
