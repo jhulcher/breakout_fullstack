@@ -4,7 +4,7 @@ jhulcher.github.io/breakout
 
 ## A classic Breakout game with updated physics and old fashioned aesthetics
 
-- Use left and right arrow keys to move the Paddle left and right.
+- Use left and right arrow keys to move the Paddle left and right. Or use a mouse or trackpad.
 - Use the paddle to direct the ball upward to destroy the bricks.
 - Destroy two walls to beat the game, just like in the original Atari 2600 game.
 
