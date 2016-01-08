@@ -47,25 +47,25 @@ function noteMaker (datum) {
     playNote(1050);
   }
   if (datum === 10) {
-    var sound = new note(60);
+    var sound = new note(40);
     sound.start();
     setTimeout(function () {
       sound.stop();
     }, 84);
     setTimeout(function () {
-      var sound2 = new note(60);
+      var sound2 = new note(40);
       sound2.start();
       setTimeout(function () {
         sound2.stop();
       }, 84);
-    }, 100);
+    }, 105);
     setTimeout(function () {
-      var sound3 = new note(60);
+      var sound3 = new note(40);
       sound3.start();
       setTimeout(function () {
         sound3.stop();
       }, 84);
-    }, 200);
+    }, 210);
   } else if (datum === 9) {
     playNote(140);
   } else if (datum === 8) {

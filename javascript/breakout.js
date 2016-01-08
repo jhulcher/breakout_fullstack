@@ -21,8 +21,7 @@ var level = 1;
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-var titleOver = true;
-var startSequence = canvas.height + 35;
+var sequenceCount = canvas.height + 35;
 var titleVert = canvas.height;
 var levelTimer = 0;
 
@@ -54,10 +53,10 @@ var blocks = [];
 var begin = false;
 var textSize = 0;
 var offset = 10;
-var colors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
-              "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
-              "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
-              "#660000", "#4C0000", "#320000", "#180000"];
+var titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
+                   "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
+                   "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
+                   "#660000", "#4C0000", "#320000", "#180000"];
 
 var startColors = ["#FDCDA9", "#FDC297", "#FDB885", "#FDAE73", "#FDA361",
                    "#FC994F", "#FC8E3D", "#FC842B", "#FC7A19", "#FC6F07",
@@ -66,9 +65,33 @@ var startColors = ["#FDCDA9", "#FDC297", "#FDB885", "#FDAE73", "#FDA361",
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
-document.addEventListener("mousemove", mouseMoveHandler, false);
+document.addEventListener("mousemove", mouseHandler, false);
 
-function drawWalls() {
+function reset () {
+    score = 0;
+    lives = 5;
+    level = 1;
+    x = canvas.width / 2;
+    y = canvas.height - 20;
+    paddleX = (canvas.width - paddleWidth) / 2;
+    sequenceCount = canvas.height + 35;
+    titleVert = canvas.height;
+    levelTimer = 0;
+    ballDirectionX = 3;
+    ballDirectionY = -3;
+    blockRowCount = 6;
+    begin = false;
+    textSize = 0;
+    offset = 10;
+    titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
+                   "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
+                   "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
+                   "#660000", "#4C0000", "#320000", "#180000"];
+    setBlocks();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawWalls () {
   // left wall
   ctx.beginPath();
   ctx.rect(0, 50, 40, 415);
@@ -107,26 +130,27 @@ function setBlocks () {
     blocks[c] = [];
     for (var r = 0; r < blockRowCount; r++) {
       if (r === 0) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#6c0003" };
+        var rowColor = "#6c0003";
       } else if (r === 1) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#a64802" };
+            rowColor = "#a64802";
       } else if (r === 2) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#5b6c01" };
+            rowColor = "#5b6c01";
       } else if (r === 3) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#009d19" };
+            rowColor = "#009d19";
       } else if (r === 4) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#40fe06" };
+            rowColor = "#40fe06";
       } else if (r === 5) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#004df8" };
+            rowColor = "#004df8";
       } else if (r === 6) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#1a1aff" };
+            rowColor = "#1a1aff";
       } else if (r === 7 ){
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#4400cc" };
+            rowColor = "#4400cc";
       } else if (r === 8) {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#2b0080" };
+            rowColor = "#2b0080";
       } else {
-        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#6c0003" };
+            rowColor = "#6c0003";
       }
+      blocks[c][r] = { x: 0, y: 0, status: 1, color: rowColor };
     }
   }
 }
@@ -159,7 +183,7 @@ function keyDownHandler (e) {
   }
   if (e.keyCode === 13) {
     begin = true;
-    startSequence = 200;
+    sequenceCount = 200;
   }
 }
 
@@ -171,7 +195,7 @@ function keyUpHandler (e) {
   }
 }
 
-function mouseMoveHandler (e) {
+function mouseHandler (e) {
   var mouseX = e.clientX - canvas.offsetLeft;
   if (mouseX > paddleWidth / 2 && mouseX < canvas.width - (paddleWidth / 2)) {
     paddleX = mouseX - paddleWidth / 2;
@@ -185,7 +209,7 @@ function collisionDetection () {
       if (b.status > 0) {
         // touching bottom of block
         if ((x + ballDirectionX > b.x - 10) &&
-            (x + ballDirectionX < (b.x + (blockWidth + 10))) &&
+            (x + ballDirectionX < b.x + (blockWidth + 10)) &&
             (y + ballDirectionY > b.y) &&
             (y + ballDirectionY < (b.y + 16)) &&
             (y + ballDirectionY > b.y + 9) &&
@@ -203,75 +227,72 @@ function collisionDetection () {
                   createBasicExplosion(b.x, b.y, b.color);
                   explode();
                 }
-        } else if (
-         // touching right side of block
-         (y > b.y) &&
-         (y < (b.y + blockHeight)) &&
-         (x > b.x) &&
-         (x < (b.x + blockWidth + 7))) {
-             noteMaker(r);
-             ballDirectionX = -ballDirectionX;
-             b.status = 0;
-             createBasicExplosion(b.x, b.y, b.color);
-             explode();
-         } else if (
-          // touching left side of block
-            (y > b.y) &&
-            (y < (b.y + blockHeight)) &&
-            (x > b.x - blockWidth + 18) &&
-            (x < b.x)) {
-                noteMaker(r);
-                ballDirectionX = -ballDirectionX;
-                b.status = 0;
-                createBasicExplosion(b.x, b.y, b.color);
-                explode();
-         } else if (
-          // touching top of block
-            (x + ballDirectionX > b.x - 19) &&
-            (x + ballDirectionX < (b.x + (blockWidth + 10))) &&
-            (y + ballDirectionY + 4 < b.y) &&
-            (y + ballDirectionY + 4 > (b.y - 7)) &&
-            (y + ballDirectionY < b.y) &&
-            (ballDirectionY > 0)) {
-                if (r > 0 && (blocks[c][r - 1].status === 0)) {
-                 noteMaker(r);
-                 ballDirectionY = -ballDirectionY;
-                 b.status = 0;
-                 createBasicExplosion(b.x, b.y, b.color);
-                 explode();
-               } else if (r === 0) {
-                 noteMaker(r);
-                 ballDirectionY = -ballDirectionY;
-                 b.status = 0;
-                 createBasicExplosion(b.x, b.y, b.color);
-                 explode();
-               }
-         }
-         if (b.status === 0) {
-           if (r === 5 || r === 6 || r === 7 || r === 8 || r === 9) {
+        // touching right side of block
+        } else if ((y > b.y) &&
+                   (y < (b.y + blockHeight)) &&
+                   (x > b.x) &&
+                   (x < (b.x + blockWidth + 7))) {
+                       noteMaker(r);
+                       ballDirectionX = -ballDirectionX;
+                       b.status = 0;
+                       createBasicExplosion(b.x, b.y, b.color);
+                       explode();
+         // touching left side of block
+        } else if ((y > b.y) &&
+                   (y < b.y + blockHeight) &&
+                   (x > b.x - blockWidth + 18) &&
+                   (x < b.x)) {
+                      noteMaker(r);
+                      ballDirectionX = -ballDirectionX;
+                      b.status = 0;
+                      createBasicExplosion(b.x, b.y, b.color);
+                      explode();
+         // touching top of block
+        } else if ((x + ballDirectionX > b.x - 19) &&
+                   (x + ballDirectionX < b.x + (blockWidth + 10)) &&
+                   (y + ballDirectionY + 4 < b.y) &&
+                   (y + ballDirectionY + 4 > b.y - 7) &&
+                   (y + ballDirectionY < b.y) &&
+                   (ballDirectionY > 0)) {
+                        if (r > 0 && (blocks[c][r - 1].status === 0)) {
+                         noteMaker(r);
+                         ballDirectionY = -ballDirectionY;
+                         b.status = 0;
+                         createBasicExplosion(b.x, b.y, b.color);
+                         explode();
+                       } else if (r === 0) {
+                         noteMaker(r);
+                         ballDirectionY = -ballDirectionY;
+                         b.status = 0;
+                         createBasicExplosion(b.x, b.y, b.color);
+                         explode();
+                       }
+        }
+        if (b.status === 0) {
+          if (r === 5 || r === 6 || r === 7 || r === 8 || r === 9) {
              score += 1;
-           } else if (r === 4) {
+          } else if (r === 4) {
              score += 1;
-           } else if (r === 3) {
+          } else if (r === 3) {
              score += 4;
-           } else if (r === 2) {
+          } else if (r === 2) {
              score += 4;
-           } else if (r === 1) {
+          } else if (r === 1) {
              score += 7;
-           } else {
-             score += 7;
-             if (ballDirectionX > 0) {
+          } else {
+            score += 7;
+            if (ballDirectionX > 0) {
                ballDirectionX = 5;
-             } else {
+            } else {
                ballDirectionX = -5;
-             }
-             if (ballDirectionY > 0) {
+            }
+            if (ballDirectionY > 0) {
                ballDirectionY = 5;
-             } else {
+            } else {
                ballDirectionY = -5;
-             }
-           }
-         }
+            }
+          }
+        }
       }
     }
   }
@@ -328,8 +349,8 @@ function drawTitle () {
         ctx.fillStyle = "white";
         ctx.fillText("Inspired by the original Atari 2600 Game", 76, 450);
   } else {
-    color = colors.shift();
-    colors.push(color);
+    color = titleColors.shift();
+    titleColors.push(color);
   }
   if (titleVert > 265) {
     textSize += 1.25;
@@ -363,7 +384,7 @@ function startNewLevel () {
 }
 
 function draw () {
-  if (startSequence <= 200) {
+  if (sequenceCount <= 200) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
 
@@ -377,30 +398,30 @@ function draw () {
     setTimeout(function () {
       ctx.font = "35px Imagine";
       ctx.fillStyle = startColor;
-      ctx.fillText("Press Enter", 178, titleVert + 95);
+      ctx.fillText("Press Enter", 178, 359);
     }, 2600);
   }
   // level 1 title
   if (begin === true) {
-    if (startSequence <= 200 && startSequence > 50) {
+    if (sequenceCount <= 200 && sequenceCount > 50) {
       drawWalls();
       drawBlocks();
       drawScore();
       drawLives();
       drawLevel();
-      if (startSequence < 150) {
+      if (sequenceCount < 150) {
         ctx.font = "50px Imagine";
         ctx.fillStyle = "#484947";
         ctx.fillText("Level 1", 215, 316);
       }
-      startSequence -= 1;
-      if (startSequence === 50) {
+      sequenceCount -= 1;
+      if (sequenceCount === 50) {
         noteMaker(11);
       }
     }
   }
   // after title sequence is over play game
-  if (startSequence <= 50) {
+  if (sequenceCount <= 50) {
     drawWalls();
     drawBall();
     drawPaddle();
@@ -412,18 +433,11 @@ function draw () {
     x += ballDirectionX;
     y += ballDirectionY;
   }
-  // if game over
-  if (lives === 0) {
-    ballDirectionY = 0;
-    ballDirectionX = 0;
-    x = 300;
-    y = -15;
-    ctx.font = "50px Imagine";
-    ctx.fillStyle = "#484947";
-    ctx.fillText("GAME OVER", 165, 316);
-    setTimeout(function () {
-      document.location.reload();
-    }, 5000);
+  //  moves paddle left and right
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
+    paddleX += 14;
+  } else if (leftPressed && paddleX > 0) {
+    paddleX -= 14;
   }
   // ball hits sides of screen
   if (x + ballDirectionX > ((canvas.width - ballSize) - 40) ||
@@ -431,18 +445,17 @@ function draw () {
     noteMaker(11);
     ballDirectionX = -ballDirectionX;
   }
-  // ball hits top of screen
+  // if ball hits top of screen
   if (y + ballDirectionY < ballSize + 71 &&
       y + ballDirectionY > ballSize + 65) {
     noteMaker(11);
     ballDirectionY = -ballDirectionY;
   }
-
+  //  if ball hits right side of paddle
   if ((y + ballDirectionY > canvas.height - 20) &&
       (y + ballDirectionY < canvas.height - (ballDirectionY * 4)) &&
       (x + ballDirectionX < (paddleX + paddleWidth + 4)) &&
       (x + ballDirectionX > (paddleX + paddleWidth))) {
-        //  ball hits right side of paddle
           noteMaker(12);
           if (rightPressed) {
             ballDirectionX = 5;
@@ -450,11 +463,11 @@ function draw () {
             ballDirectionX = 4;
           }
           ballDirectionY = -3;
+  // if ball hits left side of paddle
   } else if ((y + ballDirectionY > canvas.height - 20) &&
              (y + ballDirectionY < canvas.height - (ballDirectionY * 4)) &&
              (x + ballDirectionX < (paddleX)) &&
              (x + ballDirectionX > (paddleX - 12))) {
-                // ball hits left side of paddle
                  noteMaker(12);
                  if (leftPressed) {
                    ballDirectionX = -5;
@@ -463,38 +476,30 @@ function draw () {
                  }
                  ballDirectionY = -3;
   }
-
+  // if ball hits top of paddle
   if (y + ballDirectionY > canvas.height - 20 &&
       y + ballDirectionY < canvas.height - 10) {
-    if (x > (paddleX - 8) && x < (paddleX + paddleWidth)) {
-      if (rightPressed) {
-          if (ballDirectionX === -2) {
+      if (x > (paddleX - 8) && x < (paddleX + paddleWidth)) {
+        if (rightPressed && ballDirectionX === -2) {
             ballDirectionX += 1;
-          } else if (ballDirectionX === -1) {
+        } else if (rightPressed && ballDirectionX === -1) {
             ballDirectionX = -1;
-          } else {
-            if (ballDirectionX < 4) {
-              ballDirectionX += 2;
-            }
-          }
-      } else if (leftPressed) {
-          if (ballDirectionX === 2) {
+        } else if (rightPressed && ballDirectionX < 4) {
+            ballDirectionX += 2;
+        } else if (leftPressed && ballDirectionX === 2) {
             ballDirectionX -= 1;
-          } else if (ballDirectionX === 1) {
+        } else if (leftPressed && ballDirectionX === 1) {
             ballDirectionX = 1;
-          } else {
-            if (ballDirectionX > -4) {
-              ballDirectionX -= 2;
-            }
+        } else if (leftPressed && ballDirectionX > -4) {
+            ballDirectionX -= 2;
+        } else {
+          if (Math.abs(ballDirectionY) < 5) {
+            ballDirectionY += 1;
           }
-      } else {
-        if (Math.abs(ballDirectionY) < 5) {
-          ballDirectionY += 1;
         }
+        noteMaker(12);
+        ballDirectionY = -ballDirectionY;
       }
-      noteMaker(12);
-      ballDirectionY = -ballDirectionY;
-    }
   }
   // if ball is lost at bottom of screen
   if ((y + ballDirectionY) > (canvas.height )) {
@@ -505,35 +510,29 @@ function draw () {
       if (lives > 0) {
         var newValue = (Math.floor(Math.random() * 500) + 1);
       if (newValue < 70) {
-        newValue = 70;
+            newValue = 70;
       } else if (newValue > 570) {
-        newValue = 570;
+            newValue = 570;
       }
-      // this is only for left/right direction
-      if (x < 320) {
-        ballDirectionX = 2;
+      // chooses direction for new serve
+      if (newValue % 2 === 0) {
+        var newDirectionX = 3;
       } else {
-        ballDirectionX = -2;
+            newDirectionX = -3;
       }
-      // this serves a new ball after a lost ball
+      // serves a new ball after a lost ball
       ballDirectionY = 0;
       ballDirectionX = 0;
       setTimeout(function () {
         x = newValue;
         y = canvas.height - 20;
         noteMaker(11);
-        ballDirectionX = 3;
+        ballDirectionX = newDirectionX;
         ballDirectionY = -3;
       }, 2500);
     }
   }
-  //  moves paddle left and right
-  if (rightPressed && paddleX < canvas.width - paddleWidth) {
-    paddleX += 14;
-  } else if (leftPressed && paddleX > 0) {
-    paddleX -= 14;
-  }
-  // when player beats level 1
+  // if player beats level 1
   if (score === 336 && levelTimer < 100) {
     levelTimer += 1;
     level = 2;
@@ -545,8 +544,7 @@ function draw () {
     levelTimer = 101;
     startNewLevel();
   }
-
-  // when player beats level 2
+  // if player beats level 2
   if (score === 686 && levelTimer < 200) {
     levelTimer += 1;
     level = 3;
@@ -558,8 +556,7 @@ function draw () {
     levelTimer = 201;
     startNewLevel();
   }
-
-  // when player beats level 3
+  // if player beats level 3
   if (score === 1036 && levelTimer < 300) {
     levelTimer += 1;
     level = 4;
@@ -571,8 +568,7 @@ function draw () {
     levelTimer = 401;
     startNewLevel();
   }
-
-  // when player beats level 4
+  // if player beats level 4
   if (score === 1386 && levelTimer < 500) {
     levelTimer += 1;
     level = 5;
@@ -584,7 +580,6 @@ function draw () {
     levelTimer = 501;
     startNewLevel();
   }
-
   // If the game is won
   if (score === 1736) {
     x = 300;
@@ -593,9 +588,24 @@ function draw () {
     ballDirectionY = 0;
     ctx.fillText("Congratulations!", 49, 250);
     ctx.fillText("You've Won!", 150, 316);
-    setTimeout(function () {
-      document.location.reload();
-    }, 5000);
+    if (sequenceCount === -250) {
+      reset();
+    }
+    sequenceCount -= 1;
+  }
+  // if game over
+  if (lives === 0) {
+    ballDirectionY = 0;
+    ballDirectionX = 0;
+    x = 300;
+    y = -15;
+    ctx.font = "50px Imagine";
+    ctx.fillStyle = "#484947";
+    ctx.fillText("GAME OVER", 165, 316);
+    if (sequenceCount === -120) {
+      reset();
+    }
+    sequenceCount -= 1;
   }
   update(50);
   requestAnimationFrame(draw);
