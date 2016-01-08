@@ -40,7 +40,13 @@ function playNote (freq) {
 }
 
 function noteMaker (datum) {
-  if (datum === 8) {
+  if (datum === 12) {
+    playNote(530);
+  }
+  if (datum === 11) {
+    playNote(1050);
+  }
+  if (datum === 10) {
     var sound = new note(60);
     sound.start();
     setTimeout(function () {
@@ -60,10 +66,14 @@ function noteMaker (datum) {
         sound3.stop();
       }, 84);
     }, 200);
+  } else if (datum === 9) {
+    playNote(140);
+  } else if (datum === 8) {
+    playNote(180);
   } else if (datum === 7) {
-    playNote(1050);
+    playNote(220);
   } else if (datum === 6) {
-    playNote(530);
+    playNote(260);
   } else if (datum === 5) {
     playNote(300);
   } else if (datum === 4) {

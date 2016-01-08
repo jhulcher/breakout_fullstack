@@ -24,7 +24,7 @@ var ctx = canvas.getContext("2d");
 var titleOver = true;
 var startSequence = canvas.height + 35;
 var titleVert = canvas.height;
-var levelTwoTimer = 0;
+var levelTimer = 0;
 
 var x = canvas.width / 2;
 var y = canvas.height - 20;
@@ -116,8 +116,16 @@ function setBlocks () {
         blocks[c][r] = { x: 0, y: 0, status: 1, color: "#009d19" };
       } else if (r === 4) {
         blocks[c][r] = { x: 0, y: 0, status: 1, color: "#40fe06" };
-      } else {
+      } else if (r === 5) {
         blocks[c][r] = { x: 0, y: 0, status: 1, color: "#004df8" };
+      } else if (r === 6) {
+        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#1a1aff" };
+      } else if (r === 7 ){
+        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#4400cc" };
+      } else if (r === 8) {
+        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#2b0080" };
+      } else {
+        blocks[c][r] = { x: 0, y: 0, status: 1, color: "#6c0003" };
       }
     }
   }
@@ -182,13 +190,13 @@ function collisionDetection () {
             (y + ballDirectionY < (b.y + 16)) &&
             (y + ballDirectionY > b.y + 9) &&
             (ballDirectionY < 0)) {
-                if (r < 5 && (blocks[c][r + 1].status === 0)) {
+                if (r < blockRowCount - 1 && (blocks[c][r + 1].status === 0)) {
                   noteMaker(r);
                   ballDirectionY = -ballDirectionY;
                   b.status = 0;
                   createBasicExplosion(b.x, b.y, b.color);
                   explode();
-                } else if (r === 5) {
+                } else if (r === blockRowCount - 1) {
                   noteMaker(r);
                   ballDirectionY = -ballDirectionY;
                   b.status = 0;
@@ -240,7 +248,7 @@ function collisionDetection () {
                }
          }
          if (b.status === 0) {
-           if (r === 5) {
+           if (r === 5 || r === 6 || r === 7 || r === 8 || r === 9) {
              score += 1;
            } else if (r === 4) {
              score += 1;
@@ -333,6 +341,27 @@ function drawTitle () {
   ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
 }
 
+function beatLevel () {
+  setBlocks();
+  drawBlocks();
+  x = 300;
+  y = -15;
+  ballDirectionX = 0;
+  ballDirectionY = 0;
+  ctx.font = "50px Imagine";
+  ctx.fillStyle = "#484947";
+  ctx.fillText("Level " + level, 215, 316);
+}
+
+function startNewLevel () {
+  x = canvas.width / 2;
+  y = canvas.height - 20;
+  paddleX = (canvas.width / 2) - (paddleWidth / 2);
+  noteMaker(11);
+  ballDirectionX = 3;
+  ballDirectionY = -2;
+}
+
 function draw () {
   if (startSequence <= 200) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -362,11 +391,11 @@ function draw () {
       if (startSequence < 150) {
         ctx.font = "50px Imagine";
         ctx.fillStyle = "#484947";
-        ctx.fillText("Wall 1", 230, titleVert + 15);
+        ctx.fillText("Level 1", 215, 316);
       }
       startSequence -= 1;
       if (startSequence === 50) {
-        noteMaker(7);
+        noteMaker(11);
       }
     }
   }
@@ -391,7 +420,7 @@ function draw () {
     y = -15;
     ctx.font = "50px Imagine";
     ctx.fillStyle = "#484947";
-    ctx.fillText("GAME OVER", 165, titleVert + 15);
+    ctx.fillText("GAME OVER", 165, 316);
     setTimeout(function () {
       document.location.reload();
     }, 5000);
@@ -399,13 +428,13 @@ function draw () {
   // ball hits sides of screen
   if (x + ballDirectionX > ((canvas.width - ballSize) - 40) ||
       x + ballDirectionX < (ballSize + 29)) {
-    noteMaker(7);
+    noteMaker(11);
     ballDirectionX = -ballDirectionX;
   }
   // ball hits top of screen
   if (y + ballDirectionY < ballSize + 71 &&
       y + ballDirectionY > ballSize + 65) {
-    noteMaker(7);
+    noteMaker(11);
     ballDirectionY = -ballDirectionY;
   }
 
@@ -414,7 +443,7 @@ function draw () {
       (x + ballDirectionX < (paddleX + paddleWidth + 4)) &&
       (x + ballDirectionX > (paddleX + paddleWidth))) {
         //  ball hits right side of paddle
-          noteMaker(6);
+          noteMaker(12);
           if (rightPressed) {
             ballDirectionX = 5;
           } else {
@@ -426,7 +455,7 @@ function draw () {
              (x + ballDirectionX < (paddleX)) &&
              (x + ballDirectionX > (paddleX - 12))) {
                 // ball hits left side of paddle
-                 noteMaker(6);
+                 noteMaker(12);
                  if (leftPressed) {
                    ballDirectionX = -5;
                  } else {
@@ -463,18 +492,18 @@ function draw () {
           ballDirectionY += 1;
         }
       }
-      noteMaker(6);
+      noteMaker(12);
       ballDirectionY = -ballDirectionY;
     }
   }
   // if ball is lost at bottom of screen
   if ((y + ballDirectionY) > (canvas.height )) {
-    noteMaker(8);
+    noteMaker(10);
     x = 300;
     y = -11;
     lives -= 1;
       if (lives > 0) {
-      var newValue = (Math.floor(Math.random() * 500) + 1);
+        var newValue = (Math.floor(Math.random() * 500) + 1);
       if (newValue < 70) {
         newValue = 70;
       } else if (newValue > 570) {
@@ -492,7 +521,7 @@ function draw () {
       setTimeout(function () {
         x = newValue;
         y = canvas.height - 20;
-        noteMaker(7);
+        noteMaker(11);
         ballDirectionX = 3;
         ballDirectionY = -3;
       }, 2500);
@@ -505,37 +534,65 @@ function draw () {
     paddleX -= 14;
   }
   // when player beats level 1
-  if (score === 336 && levelTwoTimer < 100) {
-    levelTwoTimer += 1;
+  if (score === 336 && levelTimer < 100) {
+    levelTimer += 1;
     level = 2;
-    setBlocks();
-    drawBlocks();
-    x = 300;
-    y = -15;
-    ballDirectionX = 0;
-    ballDirectionY = 0;
-    ctx.font = "50px Imagine";
-    ctx.fillStyle = "#484947";
-    ctx.fillText("Wall 2", 230, titleVert + 15);
+    blockRowCount = 7;
+    beatLevel();
   }
   // starts level 2
-  if (levelTwoTimer === 100) {
-    levelTwoTimer = 101;
-    x = canvas.width / 2;
-    y = canvas.height - 20;
-    paddleX = (canvas.width / 2) - (paddleWidth / 2);
-    noteMaker(7);
-    ballDirectionX = 3;
-    ballDirectionY = -2;
+  if (levelTimer === 100) {
+    levelTimer = 101;
+    startNewLevel();
   }
+
+  // when player beats level 2
+  if (score === 686 && levelTimer < 200) {
+    levelTimer += 1;
+    level = 3;
+    blockRowCount = 8;
+    beatLevel();
+  }
+  // starts level 3
+  if (levelTimer === 200) {
+    levelTimer = 201;
+    startNewLevel();
+  }
+
+  // when player beats level 3
+  if (score === 1036 && levelTimer < 300) {
+    levelTimer += 1;
+    level = 4;
+    blockRowCount = 9;
+    beatLevel();
+  }
+  // starts level 4
+  if (levelTimer === 400) {
+    levelTimer = 401;
+    startNewLevel();
+  }
+
+  // when player beats level 4
+  if (score === 1386 && levelTimer < 500) {
+    levelTimer += 1;
+    level = 5;
+    blockRowCount = 10;
+    beatLevel();
+  }
+  // starts level 5
+  if (levelTimer === 500) {
+    levelTimer = 501;
+    startNewLevel();
+  }
+
   // If the game is won
-  if (level === 2 && score === 672) {
+  if (score === 1736) {
     x = 300;
     y = -10;
     ballDirectionX = 0;
     ballDirectionY = 0;
     ctx.fillText("Congratulations!", 49, 250);
-    ctx.fillText("You've Won!", 150, 310);
+    ctx.fillText("You've Won!", 150, 316);
     setTimeout(function () {
       document.location.reload();
     }, 5000);
