@@ -15,7 +15,6 @@ function Particle () {
 
  this.update = function(ms) {
     this.scale -= (this.scaleSpeed * ms / 1000.0);
-
     if (this.scale <= 0) {
       this.scale = 0;
     }
@@ -27,7 +26,6 @@ function Particle () {
     ctx.save();
     ctx.translate(this.x, this.y);
     ctx.scale(this.scale, this.scale);
-
     ctx.beginPath();
     ctx.rect(0, 0, this.radius, 15);
     ctx.closePath();
