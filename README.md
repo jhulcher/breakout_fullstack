@@ -1,6 +1,6 @@
 # BREAKOUT
 
-<a href="jhulcher.github.io/breakout">Play Breakout</a>
+<a href="http://jhulcher.github.io/breakout">Play Breakout</a>
 
 <img src="img/breakout.gif" />
 
