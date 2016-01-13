@@ -1,6 +1,8 @@
 # BREAKOUT
 
-jhulcher.github.io/breakout
+<a href="jhulcher.github.io/breakout">Play Breakout</a>
+
+<img src="img/breakout.gif" />
 
 ## A classic Breakout game with updated physics and old fashioned aesthetics
 
