@@ -18,4 +18,4 @@
 - Game adds new levels to the original game, instead of simple having two identical levels. Now the wall increases in size as you complete each of the 5 levels.
 - HTML5 particles were implemented to add visual dynamics to the destruction of the bricks.
 - Most sounds are synthesized using oscillators.
-- Retro styled intro animation gives the game a title card.
+- Atari styled intro animation gives the game a title card.
