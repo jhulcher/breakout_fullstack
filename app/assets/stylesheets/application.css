@@ -22,7 +22,7 @@
 
  @font-face {
    font-family: Imagine;
-   src: url("/assets/fonts/imagine_font.otf");
+   src: url('imagine_font.otf');
  }
 
  canvas {
