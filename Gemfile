@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 ruby '2.1.2'
-gem 'sqlite3'
+gem 'pg', '0.15.1'
+gem 'rails_12factor'
 gem 'newrelic_rpm'
 gem 'rails_12factor'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -38,6 +39,8 @@ group :development, :test do
   gem 'byebug'
   gem "binding_of_caller"
   gem "better_errors"
+  gem 'sqlite3'
+
 end
 
 group :development do
