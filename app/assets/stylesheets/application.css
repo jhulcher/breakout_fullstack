@@ -22,9 +22,8 @@
 
  @font-face {
    font-family: 'Imagine';
-   src: url('fonts/imagine_font.otf');
-   src: url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),
-
+   src: url('imagine_font.otf');
+   /*src: url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),*/
  }
 
  canvas {
