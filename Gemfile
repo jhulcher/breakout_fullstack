@@ -5,7 +5,7 @@ gem 'pg', '0.15.1'
 gem 'rails_12factor'
 gem 'newrelic_rpm'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.0'
+gem 'rails', '4.2.4'
 # Use postgresql as the database for Active Record
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
