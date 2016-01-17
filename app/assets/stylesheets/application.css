@@ -13,17 +13,16 @@
  *= require_tree .
  *= require_self
  */
-
- * {
-   padding: 0;
-   margin: 0;
-   font-family: Imagine;
- }
-
  @font-face {
    font-family: Imagine;
    src: url('imagine_font.otf');
    /*src: url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),*/
+ }
+ 
+ * {
+   padding: 0;
+   margin: 0;
+   font-family: Imagine;
  }
 
  canvas {
