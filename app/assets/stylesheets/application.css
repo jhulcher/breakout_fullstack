@@ -22,7 +22,9 @@
 
  @font-face {
    font-family: 'Imagine';
-   src: url('/app/assets/styesheets/imagine_font.otf');
+   src: asset_url('fonts/imagine_font.otf');
+   src: asset_url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),
+
  }
 
  canvas {
