@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
-//= require breakout
 //= require explode
 //= require music
 //= require particles
+//= require breakout
