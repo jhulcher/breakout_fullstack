@@ -4,7 +4,6 @@ ruby '2.1.2'
 gem 'pg', '0.15.1'
 gem 'rails_12factor'
 gem 'newrelic_rpm'
-gem 'rails_12factor'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use postgresql as the database for Active Record
