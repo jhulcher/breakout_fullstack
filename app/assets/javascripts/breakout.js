@@ -1,25 +1,7 @@
-// var noteMaker = document.createElement('script');
-// noteMaker.src = '/app/assets/javascripts/music.js';
-// document.head.appendChild(noteMaker);
-
-// var explode = document.createElement('script');
-// noteMaker.src = './javascripts/explode.js';
-// document.head.appendChild(explode);
-
-// var particles = document.createElement('script');
-// noteMaker.src = './javascript/particles.js';
-// document.head.appendChild(particles);
-
-// var createBasicExplosion = document.createElement('script');
-// noteMaker.src = './javascript/particles.js';
-// document.head.appendChild(createBasicExplosion);
-
 var score = 0;
 var lives = 5;
 var level = 1;
 var scores = [];
-
-// var particles;
 
 var name = "";
 var gameOver = false;

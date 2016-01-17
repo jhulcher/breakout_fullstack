@@ -13,11 +13,18 @@
  *= require_tree .
  *= require_self
  */
- @font-face {
+ /*@font-face {
    font-family: Imagine;
    src: url('imagine_font.otf');
-   /*src: url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),*/
- }
+   src: url('fonts/imagine_font.otf?#iefix') format('embedded-opentype'),
+ }*/
+
+ @font-face {
+    font-family: Imagine;
+    font-style: normal;
+    font-weight: 700;
+    src: local('Imagine'), local('Imagine'), url(imagine_font.otf) format('truetype');
+}
 
  * {
    padding: 0;
