@@ -3,6 +3,14 @@ var ctx = canvas.getContext("2d");
 
 var particles = [];
 
+function update (time) {
+  for (var i = 0; i < particles.length; i++) {
+    var particle = particles[i];
+    particle.update(time);
+    particle.draw(ctx);
+  }
+}
+
 function Particle () {
   this.scale = 1.0;
   this.x = 0;
