@@ -319,11 +319,19 @@ function drawScores () {
   var vert = 55;
 
   scores.forEach(function (thisScore) {
+    var str = "";
     vert += 40;
+    for (var z = 0; z < 3; z++) {
+      if (thisScore.name[z] === "I") {
+        str += "  |";
+      } else {
+        str += thisScore.name[z];
+      }
+    }
+    console.log(str);
     ctx.font = "40px Imagine";
     ctx.fillStyle = "white";
-    ctx.fillText(thisScore.name[0] + thisScore.name[1] +
-                 thisScore.name[2], 180, vert);
+    ctx.fillText(str, 180, vert);
     var num = thisScore.score;
     num = num.toString();
     var numArr = num.split("");
