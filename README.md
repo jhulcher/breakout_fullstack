@@ -1,6 +1,6 @@
 # BREAKOUT
 
-<a href="http://jhulcher.github.io/breakout">Play Breakout</a>
+<a href="http://break-out.herokuapp.com">Play Breakout</a>
 
 <img src="img/breakout.gif" />
 
@@ -14,6 +14,7 @@
 
 ## About
 
+- Game adds highscore tracking using a Rails backend.
 - Game adds left and right collision detection for bricks in order to bring a ricocheting element to the game. This was absent from the original.
 - Game adds new levels to the original game, instead of simple having two identical levels. Now the wall increases in size as you complete each of the 5 levels.
 - HTML5 particles were implemented to add visual dynamics to the destruction of the bricks.
