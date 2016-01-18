@@ -376,7 +376,7 @@ function drawTitle () {
   ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
   if (titleVert > 265) {
     textSize += 1.25;
-    offset += 3.5;
+    offset += 3.55;
   }
 }
 
