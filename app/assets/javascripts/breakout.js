@@ -90,13 +90,13 @@ function reset () {
 function drawWalls () {
   // left wall
   ctx.beginPath();
-  ctx.rect(0, 50, 40, 415);
+  ctx.rect(5, 50, 35, 415);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
   // bottom of left wall
   ctx.beginPath();
-  ctx.rect(0, 465, 40, 20);
+  ctx.rect(5, 465, 35, 20);
   ctx.fillStyle = "#004df8";
   ctx.fill();
   ctx.closePath();
@@ -108,13 +108,13 @@ function drawWalls () {
   ctx.closePath();
   // bottom of right wall
   ctx.beginPath();
-  ctx.rect(600, 465, 40, 15);
+  ctx.rect(600, 465, 35, 15);
   ctx.fillStyle = "#a64802";
   ctx.fill();
   ctx.closePath();
   // right wall
   ctx.beginPath();
-  ctx.rect(600, 50, 40, 415);
+  ctx.rect(600, 50, 35, 415);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
@@ -452,9 +452,9 @@ function draw () {
     y += ballDirectionY;
   }
   //  moves paddle left and right
-  if (rightPressed && paddleX < canvas.width - paddleWidth) {
+  if (rightPressed && paddleX < canvas.width - paddleWidth - 14) {
     paddleX += 14;
-  } else if (leftPressed && paddleX > 0) {
+  } else if (leftPressed && paddleX > 0 + 14) {
     paddleX -= 14;
   }
   // ball hits sides of screen
