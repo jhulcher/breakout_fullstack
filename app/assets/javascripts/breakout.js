@@ -416,7 +416,7 @@ function draw () {
     setTimeout(function () {
       ctx.font = "35px Imagine";
       ctx.fillStyle = startColor;
-      ctx.fillText("Press Enter", 180, 359);
+      ctx.fillText("Press Enter", 182, 359);
     }, 2600);
   }
   // level 1 title
