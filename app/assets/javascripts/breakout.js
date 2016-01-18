@@ -328,11 +328,6 @@ function drawScores () {
     num = num.toString();
     var numArr = num.split("");
     var newArr = [];
-    for (var z = 0; z < name.length; z++) {
-      if (name[z] === "I") {
-        name[z] = "  |";
-      }
-    }
     numArr.forEach(function (el) {
       if (el === "1") {
         newArr.push("  |");

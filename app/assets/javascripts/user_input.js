@@ -29,7 +29,7 @@ function keyDownHandler (e) {
     } else if (e.keyCode === 72) {
       name += "H";
     } else if (e.keyCode === 73) {
-      name += "I";
+      name += "  |";
     } else if (e.keyCode === 74) {
       name += "J";
     } else if (e.keyCode === 75) {
