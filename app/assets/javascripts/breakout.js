@@ -43,7 +43,7 @@ var blocks = [];
 
 var begin = false;
 var textSize = 0;
-var offset = 10;
+var offset = 0;
 var titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
                    "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
                    "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
@@ -370,14 +370,14 @@ function drawTitle () {
     color = titleColors.shift();
     titleColors.push(color);
   }
-  if (titleVert > 265) {
-    textSize += 1.25;
-    offset += 3.5;
-  }
   ctx.font = textSize + "px Imagine";
   ctx.font = textSize;
   ctx.fillStyle = color;
   ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
+  if (titleVert > 265) {
+    textSize += 1.25;
+    offset += 3.5;
+  }
 }
 
 function beatLevel () {
