@@ -2,7 +2,7 @@
 
 <a href="http://break-out.herokuapp.com">Play Breakout</a>
 
-<img src="img/breakout.gif" />
+<img src="img/breakout.jpg" /><img src="img/breakout2.jpg" /><img src="img/breakout3.jpg" />
 
 ## A classic Breakout game with updated physics and old fashioned aesthetics
 
