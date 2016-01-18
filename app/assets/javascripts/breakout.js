@@ -284,14 +284,26 @@ function drawPaddle () {
 function drawScore () {
   ctx.font = "50px Imagine";
   ctx.fillStyle = "#484947";
-  if (score.toString().length === 1) {
-    var newScore = "0  0  " + score;
-  } else if (score.toString().length === 2) {
-        newScore = "0  " + score.toString()[0] + "  " +
-        score.toString()[1];
-  } else if (score.toString().length === 3) {
-        newScore = score.toString()[0] + "  " +
-        score.toString()[1] + "  " + score.toString()[2];
+  var scoreArr = [];
+  for (var b = 0; b < score.toString().length; b++) {
+    if (score.toString()[b] === 1) {
+      scoreArr.push("  |");
+    } else {
+      scoreArr.push(score.toString()[b]);
+    }
+  }
+  if (scoreArr.length === 1) {
+    var newScore = "0  0  0  " + score;
+  } else if (scoreArr.length === 2) {
+        newScore = "0  0  " + scoreArr[0] + "  " +
+        scoreArr[1];
+  } else if (scoreArr.length === 3) {
+        newScore = "0  " + scoreArr[0] + "  " +
+        scoreArr[1] + "  " + scoreArr[2];
+  } else if (scoreArr.length === 4) {
+        newScore = scoreArr[0] + "  " +
+        scoreArr[1] + "  " + scoreArr[2] + "  " +
+        scoreArr[3];
   }
   ctx.fillText(newScore, 85, 42);
 }
@@ -590,20 +602,20 @@ function draw () {
     beatLevel();
   }
   // starts level 4
-  if (levelTimer === 400) {
-    levelTimer = 401;
+  if (levelTimer === 300) {
+    levelTimer = 301;
     startNewLevel();
   }
   // if player beats level 4
-  if (score === 1386 && levelTimer < 500) {
+  if (score === 1386 && levelTimer < 400) {
     levelTimer += 1;
     level = 5;
     blockRowCount = 10;
     beatLevel();
   }
   // starts level 5
-  if (levelTimer === 500) {
-    levelTimer = 501;
+  if (levelTimer === 400) {
+    levelTimer = 401;
     startNewLevel();
   }
   // If the game is won
