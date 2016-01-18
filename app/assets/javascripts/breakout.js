@@ -595,7 +595,7 @@ function draw () {
     startNewLevel();
   }
   // if player beats level 3
-  if (score === 1036 && levelTimer < 300) {
+  if (score === 1050 && levelTimer < 300) {
     levelTimer += 1;
     level = 4;
     blockRowCount = 9;
@@ -607,7 +607,7 @@ function draw () {
     startNewLevel();
   }
   // if player beats level 4
-  if (score === 1386 && levelTimer < 400) {
+  if (score === 1428 && levelTimer < 400) {
     levelTimer += 1;
     level = 5;
     blockRowCount = 10;
@@ -619,7 +619,7 @@ function draw () {
     startNewLevel();
   }
   // If the game is won
-  if (score === 1736) {
+  if (score === 1820) {
     x = 300;
     y = -10;
     ballDirectionX = 0;

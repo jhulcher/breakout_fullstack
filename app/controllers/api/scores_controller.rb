@@ -25,11 +25,11 @@ class Api::ScoresController < ApplicationController
   end
 
   def level_score
-    if score_params[:score].to_i > 1736
+    if score_params[:score].to_i > 1820
         return false
-    elsif score_params[:score].to_i >= 1386
+    elsif score_params[:score].to_i >= 1428
       score_params[:level].to_i == 5
-    elsif score_params[:score].to_i >= 1036
+    elsif score_params[:score].to_i >= 1050
       score_params[:level].to_i == 4
     elsif score_params[:score].to_i >= 686
       score_params[:level].to_i == 3
