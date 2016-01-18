@@ -376,7 +376,7 @@ function drawTitle () {
   ctx.fillText("BREAKOUT", (canvas.width / 2) - offset, titleVert);
   if (titleVert > 265) {
     textSize += 1.25;
-    offset += 3.55;
+    offset += 3.56;
   }
 }
 
@@ -416,7 +416,7 @@ function draw () {
     setTimeout(function () {
       ctx.font = "35px Imagine";
       ctx.fillStyle = startColor;
-      ctx.fillText("Press Enter", 178, 359);
+      ctx.fillText("Press Enter", 180, 359);
     }, 2600);
   }
   // level 1 title
