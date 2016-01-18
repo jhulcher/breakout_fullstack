@@ -1,7 +1,5 @@
 class Api::ScoresController < ApplicationController
 
-  before_filter :level_score, only: [:create]
-
   def index
     @scores = Score.all
     @scores = @scores.sort { |a, b| a.num <=> b.num }.reverse
@@ -9,11 +7,13 @@ class Api::ScoresController < ApplicationController
   end
 
   def create
-    @score = Score.new(score_params)
-    @score.save!
-    @scores = Score.all
-    @scores = @scores.sort { |a, b| a.num <=> b.num }.reverse
-    clean_up
+    if level_score
+      @score = Score.new(score_params)
+      @score.save!
+      @scores = Score.all
+      @scores = @scores.sort { |a, b| a.num <=> b.num }.reverse
+      clean_up
+    end
   end
 
   def clean_up
