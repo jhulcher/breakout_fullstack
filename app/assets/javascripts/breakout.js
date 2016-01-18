@@ -316,7 +316,7 @@ function drawScores () {
   ctx.fillText("high scores", 180, 50);
 
   getScores();
-  
+
   var vert = 55;
 
   scores.forEach(function (thisScore) {
@@ -329,7 +329,6 @@ function drawScores () {
         str += thisScore.name[z];
       }
     }
-    console.log(str);
     ctx.font = "40px Imagine";
     ctx.fillStyle = "white";
     ctx.fillText(str, 180, vert);
@@ -642,9 +641,18 @@ function draw () {
       ctx.fill();
       ctx.closePath();
 
+      var enteredName = "";
+      for (var z = 0; z < name.length; z++) {
+        if (name[z] === "I") {
+          enteredName += "  |";
+        } else {
+          enteredName += name[z];
+        }
+      }
+
       ctx.font = "50px Imagine";
       ctx.fillStyle = "white";
-      ctx.fillText(name, 269, 271);
+      ctx.fillText(enteredName, 269, 271);
     } else {
       setTimeout(function () {
         scoreEntered = true;
