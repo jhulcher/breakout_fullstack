@@ -86,7 +86,7 @@ function keyUpHandler (e) {
 
 function mouseHandler (e) {
   var mouseX = e.clientX - canvas.offsetLeft;
-  if (mouseX > paddleWidth / 2 && mouseX < canvas.width - (paddleWidth / 2)) {
+  if (mouseX - 10 > paddleWidth / 2 && mouseX + 10 < canvas.width - (paddleWidth / 2)) {
     paddleX = mouseX - paddleWidth / 2;
   }
 }

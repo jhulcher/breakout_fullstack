@@ -90,13 +90,13 @@ function reset () {
 function drawWalls () {
   // left wall
   ctx.beginPath();
-  ctx.rect(5, 50, 35, 415);
+  ctx.rect(10, 50, 30, 415);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
   // bottom of left wall
   ctx.beginPath();
-  ctx.rect(5, 465, 35, 20);
+  ctx.rect(10, 465, 30, 20);
   ctx.fillStyle = "#004df8";
   ctx.fill();
   ctx.closePath();
@@ -108,13 +108,13 @@ function drawWalls () {
   ctx.closePath();
   // bottom of right wall
   ctx.beginPath();
-  ctx.rect(600, 465, 35, 15);
+  ctx.rect(600, 465, 30, 15);
   ctx.fillStyle = "#a64802";
   ctx.fill();
   ctx.closePath();
   // right wall
   ctx.beginPath();
-  ctx.rect(600, 50, 35, 415);
+  ctx.rect(600, 50, 30, 415);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
@@ -460,9 +460,9 @@ function draw () {
   }
   // after title sequence is over play game
   if (sequenceCount <= 50) {
+    drawPaddle();
     drawWalls();
     drawBall();
-    drawPaddle();
     collisionDetection();
     drawBlocks();
     drawScore();
@@ -472,9 +472,9 @@ function draw () {
     y += ballDirectionY;
   }
   //  moves paddle left and right
-  if (rightPressed && paddleX < canvas.width - paddleWidth - 14) {
+  if (rightPressed && paddleX + 10 < canvas.width - paddleWidth - 14) {
     paddleX += 14;
-  } else if (leftPressed && paddleX > 0 + 14) {
+  } else if (leftPressed && paddleX - 10 > 0 + 14) {
     paddleX -= 14;
   }
   // ball hits sides of screen
