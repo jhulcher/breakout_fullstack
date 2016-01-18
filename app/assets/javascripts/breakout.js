@@ -300,20 +300,20 @@ function drawScores () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.beginPath();
-  ctx.rect(140, 0, 15, canvas.height);
+  ctx.rect(135, 0, 15, canvas.height);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
 
   ctx.beginPath();
-  ctx.rect(498, 0, 15, canvas.height);
+  ctx.rect(493, 0, 15, canvas.height);
   ctx.fillStyle = "#484947";
   ctx.fill();
   ctx.closePath();
 
   ctx.font = "40px Imagine";
   ctx.fillStyle = "#E40000";
-  ctx.fillText("high scores", 185, 50);
+  ctx.fillText("high scores", 180, 50);
 
   getScores();
   var vert = 55;
@@ -323,11 +323,16 @@ function drawScores () {
     ctx.font = "40px Imagine";
     ctx.fillStyle = "white";
     ctx.fillText(thisScore.name[0] + thisScore.name[1] +
-                 thisScore.name[2], 185, vert);
+                 thisScore.name[2], 180, vert);
     var num = thisScore.score;
     num = num.toString();
     var numArr = num.split("");
     var newArr = [];
+    for (var z = 0; z < name.length; z++) {
+      if (name[z] === "I") {
+        name[z] = "  |";
+      }
+    }
     numArr.forEach(function (el) {
       if (el === "1") {
         newArr.push("  |");
@@ -336,13 +341,13 @@ function drawScores () {
       }
     });
     if (num.length === 4) {
-      ctx.fillText(newArr[0] + newArr[1] + newArr[2] + newArr[3], 353, vert);
+      ctx.fillText(newArr[0] + newArr[1] + newArr[2] + newArr[3], 348, vert);
     } else if (newArr.length === 3) {
-      ctx.fillText("   " + newArr[0] + newArr[1] + newArr[2], 353, vert);
+      ctx.fillText("   " + newArr[0] + newArr[1] + newArr[2], 348, vert);
     } else if (newArr.length === 2) {
-      ctx.fillText("      " + newArr[0] + newArr[1], 353, vert);
+      ctx.fillText("      " + newArr[0] + newArr[1], 348, vert);
     } else if (newArr.length === 1) {
-      ctx.fillText("         " + newArr[0], 353, vert);
+      ctx.fillText("         " + newArr[0], 348, vert);
     }
   });
 }
@@ -416,7 +421,7 @@ function draw () {
     setTimeout(function () {
       ctx.font = "35px Imagine";
       ctx.fillStyle = startColor;
-      ctx.fillText("Press Enter", 182, 359);
+      ctx.fillText("Press Enter", 184, 359);
     }, 2600);
   }
   // level 1 title
