@@ -316,6 +316,7 @@ function drawScores () {
   ctx.fillText("high scores", 180, 50);
 
   getScores();
+  
   var vert = 55;
 
   scores.forEach(function (thisScore) {
