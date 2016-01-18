@@ -35,6 +35,8 @@ class Api::ScoresController < ApplicationController
       score_params[:level].to_i == 3
     elsif score_params[:score].to_i >= 336
       score_params[:level].tp_i == 2
+    else
+      true
     end
   end
 
