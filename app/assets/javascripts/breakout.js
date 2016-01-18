@@ -78,7 +78,7 @@ function reset () {
     blockRowCount = 6;
     begin = false;
     textSize = 0;
-    offset = 10;
+    offset = 0;
     titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
                    "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
                    "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
@@ -646,7 +646,7 @@ function draw () {
   if (scoreEntered) {
     drawScores();
     sequenceCount -= 1;
-    if (sequenceCount === -600) {
+    if (sequenceCount === -700) {
       reset();
     }
   }
