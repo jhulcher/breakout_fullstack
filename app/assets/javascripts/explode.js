@@ -3,7 +3,4 @@ function explode () {
   this.brickSmash.type = "audio/wav";
   this.brickSmash.volume = 0.2;
   this.brickSmash.play();
-  setTimeout(function () {
-    this.brickSmash.stop();
-  }, 1500);
 }
