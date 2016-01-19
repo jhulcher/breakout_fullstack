@@ -331,6 +331,10 @@ function drawScores () {
   getScores();
   var vert = 55;
 
+  if (scores.length > 10) {
+    scores.pop()
+  }
+
   scores.forEach(function (thisScore) {
     var str = "";
     vert += 40;
