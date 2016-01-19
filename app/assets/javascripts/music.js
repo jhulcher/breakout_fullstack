@@ -6,6 +6,9 @@ function createOscillator (freq) {
   osc.frequency.value = freq;
   osc.detune.value = 0;
   osc.start(audioCon.currentTime);
+  setTimeout(function () {
+    osc.stop();
+  }, 150);
   return osc;
 }
 
