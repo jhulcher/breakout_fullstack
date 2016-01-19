@@ -1,3 +1,6 @@
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+
 var score = 0;
 var lives = 5;
 var level = 1;
@@ -8,9 +11,7 @@ var gameOver = false;
 var scoreEntered = false;
 var highScores = [];
 var scoreDrawn = false;
-
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
+var startCounter = 0;
 
 var sequenceCount = canvas.height + 35;
 var titleVert = canvas.height;
@@ -79,6 +80,7 @@ function reset () {
     begin = false;
     textSize = 0;
     offset = 0;
+    startCounter = 0;
     titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
                    "#7E0000", "#980000", "#B20000", "#CC0000", "#E40000",
                    "#CC0000", "#B20000", "#980000", "#7E0000", "#6c0003",
@@ -310,7 +312,6 @@ function drawScore () {
 
 function drawScores () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   ctx.beginPath();
   ctx.rect(135, 0, 15, canvas.height);
   ctx.fillStyle = "#484947";
@@ -328,7 +329,6 @@ function drawScores () {
   ctx.fillText("high scores", 180, 50);
 
   getScores();
-
   var vert = 55;
 
   scores.forEach(function (thisScore) {
@@ -386,6 +386,7 @@ function drawTitle () {
         ctx.font = textSize;
         ctx.fillStyle = "white";
         ctx.fillText("Inspired by the original Atari 2600 Game", 76, 450);
+        startCounter += 1;
   } else {
     color = titleColors.shift();
     titleColors.push(color);
@@ -397,6 +398,14 @@ function drawTitle () {
   if (titleVert > 265) {
     textSize += 1.25;
     offset += 3.58;
+  }
+
+  if (startCounter > 60) {
+    var startColor = startColors.shift();
+    startColors.push(startColor);
+    ctx.font = "35px Imagine";
+    ctx.fillStyle = startColor;
+    ctx.fillText("Press Enter", 184, 359);
   }
 }
 
@@ -431,13 +440,13 @@ function draw () {
     if (titleVert > 264) {
       titleVert -= 3;
     }
-    var startColor = startColors.shift();
-    startColors.push(startColor);
-    setTimeout(function () {
-      ctx.font = "35px Imagine";
-      ctx.fillStyle = startColor;
-      ctx.fillText("Press Enter", 184, 359);
-    }, 2600);
+    // var startColor = startColors.shift();
+    // startColors.push(startColor);
+    // setTimeout(function () {
+    //   ctx.font = "35px Imagine";
+    //   ctx.fillStyle = startColor;
+    //   ctx.fillText("Press Enter", 184, 359);
+    // }, 2600);
   }
   // level 1 title
   if (begin === true) {
