@@ -27,13 +27,13 @@
 }
 
 .drop {
-  padding: 136px 230px 0px 0px;
+  padding: 125px 220px 0px 0px;
   position: center;
 }
 
 body {
   background-color: white;
-  background-image: url("http://break-out.herokuapp.com/tv4.gif");
+  background-image: url("http://break-out.herokuapp.com/tv5.gif");
   background-repeat:no-repeat;
   background-position: center 0px;
   margin: 0px 0px 0px 0px;
