@@ -1,6 +1,6 @@
 # BREAKOUT
 
-<a href="http://break-out.herokuapp.com">Play Breakout</a>
+<a href="http://www.playbreakout.us">Play Breakout</a>
 
 <img src="img/breakout.jpg" /><img src="img/breakout2.jpg" /><img src="img/breakout3.jpg" />
 
