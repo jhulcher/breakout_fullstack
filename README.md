@@ -14,7 +14,7 @@
 
 ## About
 
-- Game adds highscore tracking using a Rails backend.
+- I created my own custom text-input within Canvas for high-score names.  
 - Game adds left and right collision detection for bricks in order to bring a ricocheting element to the game. This was absent from the original.
 - Game adds new levels to the original game, instead of simple having two identical levels. Now the wall increases in size as you complete each of the 5 levels.
 - HTML5 particles were implemented to add visual dynamics to the destruction of the bricks.
