@@ -709,4 +709,4 @@ setTimeout(function () {
   getScores();
   setBlocks();
   draw();
-}, 1000);
+}, 1100);
