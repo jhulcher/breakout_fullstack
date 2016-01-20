@@ -23,9 +23,8 @@
     font-family: Imagine;
     font-style: normal;
     font-weight: 700;
-    src: local('Imagine'), local('Imagine'), url("imagine_font.otf") format('truetype');
+    src: local('Imagine'), local('Imagine'), url("http://break-out.herokuapp.com/imagine_font.otf") format('truetype');
 }
-
 
 .drop {
   padding: 125px 225px 0px 0px;
