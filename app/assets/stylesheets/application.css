@@ -23,13 +23,18 @@
     font-family: Imagine;
     font-style: normal;
     font-weight: 700;
-    src: local('Imagine'), local('Imagine'), url("http://break-out.herokuapp.com/imagine_font.otf") format('truetype');
+    src: local('Imagine'), local('Imagine'), url("imagine_font.otf") format('truetype');
 }
 
 .drop {
   padding: 125px 225px 0px 0px;
   position: center;
 }
+
+/*config.action_dispatch.default_headers = {
+    'Access-Control-Allow-Origin' => 'http://break-out.herokuapp.com',
+    'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
+  }*/
 
 body {
   background-color: white;
