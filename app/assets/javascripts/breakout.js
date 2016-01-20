@@ -705,6 +705,8 @@ function update (time) {
   }
 }
 
-getScores();
-setBlocks();
-draw();
+setTimeout(function () {
+  getScores();
+  setBlocks();
+  draw();
+}, 1000);
