@@ -23,7 +23,7 @@
     font-family: Imagine;
     font-style: normal;
     font-weight: 700;
-    src: local('Imagine'), local('Imagine'), url("www.adobe.ly/1RA8SsP") format('truetype');
+    src: local('Imagine'), local('Imagine'), url("http://www.adobe.ly/1RA8SsP") format('truetype');
 }
 
 .drop {
