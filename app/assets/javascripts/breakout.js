@@ -633,16 +633,43 @@ function draw () {
   }
   // If the game is won
   if (score === 1820) {
-    x = 300;
-    y = -10;
-    ballDirectionX = 0;
+    gameOver = true;
     ballDirectionY = 0;
-    ctx.fillText("Congratulations!", 49, 250);
-    ctx.fillText("You've Won!", 150, 316);
-    if (sequenceCount === -250) {
-      reset();
+    ballDirectionX = 0;
+    x = 300;
+    y = -15;
+    ctx.font = "50px Imagine";
+    ctx.fillStyle = "white";
+    ctx.fillText("You Win!", 210, 195);
+
+    if (score > (scores[scores.length - 1]).score) {
+      ctx.font = "30px Imagine";
+      ctx.fillStyle = "white";
+      ctx.fillText('Enter initials for high score', 55, 340);
+
+      ctx.beginPath();
+      ctx.rect(250, 225, 145, 60);
+      ctx.fillStyle = "#484947";
+      ctx.fill();
+      ctx.closePath();
+
+      var enteredName = "";
+      for (var z = 0; z < name.length; z++) {
+        if (name[z] === "I") {
+          enteredName += "  |";
+        } else {
+          enteredName += name[z];
+        }
+      }
+
+      ctx.font = "50px Imagine";
+      ctx.fillStyle = "white";
+      ctx.fillText(enteredName, 269, 271);
+    } else {
+      setTimeout(function () {
+        scoreEntered = true;
+      }, 3000);
     }
-    sequenceCount -= 1;
   }
   // if game over
   if (lives === 0 && scoreEntered === false) {
@@ -666,8 +693,8 @@ function draw () {
       ctx.fill();
       ctx.closePath();
 
-      var enteredName = "";
-      for (var z = 0; z < name.length; z++) {
+      enteredName = "";
+      for (z = 0; z < name.length; z++) {
         if (name[z] === "I") {
           enteredName += "  |";
         } else {
