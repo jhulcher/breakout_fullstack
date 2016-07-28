@@ -9,6 +9,12 @@ function keyDownHandler (e) {
   } else if (e.keyCode === 8) {
     e.preventDefault();
     name = name.substring(0, name.length - 1);
+  } else if (e.keyCode === 32) {
+    if (pause && sequenceCount <= 50) {
+      pause = false;
+    } else if (!(pause) && sequenceCount <= 50){
+      pause = true;
+    }
   }
   // letter input and delete key only for high score
   if (name.length < 3) {
@@ -86,7 +92,9 @@ function keyUpHandler (e) {
 
 function mouseHandler (e) {
   var mouseX = e.clientX - canvas.offsetLeft;
-  if (mouseX - 10 > paddleWidth / 2 && mouseX + 10 < canvas.width - (paddleWidth / 2)) {
-    paddleX = mouseX - paddleWidth / 2;
+  if (!(pause)) {
+    if (mouseX - 10 > paddleWidth / 2 && mouseX + 10 < canvas.width - (paddleWidth / 2)) {
+      paddleX = mouseX - paddleWidth / 2;
+    }
   }
 }

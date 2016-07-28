@@ -43,6 +43,7 @@ var blocksLeftPadding = 40;
 var blocks = [];
 
 var begin = false;
+var pause = false;
 var textSize = 0;
 var offset = 0;
 var titleColors = ["#180000", "#320000", "#4C0000", "#660000", "#6c0003",
@@ -268,11 +269,11 @@ function collisionDetection () {
 }
 
 function drawBall() {
-    ctx.beginPath();
-    ctx.rect(x, y, 10, 10);
-    ctx.fillStyle = "#bf4646";
-    ctx.fill();
-    ctx.closePath();
+  ctx.beginPath();
+  ctx.rect(x, y, 10, 10);
+  ctx.fillStyle = "#bf4646";
+  ctx.fill();
+  ctx.closePath();
 }
 
 function drawPaddle () {
@@ -383,6 +384,12 @@ function drawLevel () {
   ctx.fillText(level, 540, 42);
 }
 
+function drawPause () {
+  ctx.font = "50px Imagine";
+  ctx.fillStyle = "white";
+  ctx.fillText("PAUSE", 215, 316);
+}
+
 function drawTitle () {
   if (titleVert === 264) {
         var color = "grey";
@@ -444,14 +451,8 @@ function draw () {
     if (titleVert > 264) {
       titleVert -= 3;
     }
-    // var startColor = startColors.shift();
-    // startColors.push(startColor);
-    // setTimeout(function () {
-    //   ctx.font = "35px Imagine";
-    //   ctx.fillStyle = startColor;
-    //   ctx.fillText("Press Enter", 184, 359);
-    // }, 2600);
   }
+
   // level 1 title
   if (begin === true) {
     if (sequenceCount <= 200 && sequenceCount > 50) {
@@ -481,14 +482,20 @@ function draw () {
     drawScore();
     drawLives();
     drawLevel();
-    x += ballDirectionX;
-    y += ballDirectionY;
+    if (pause) {
+      drawPause();
+    } else {
+      x += ballDirectionX;
+      y += ballDirectionY;
+    }
   }
   //  moves paddle left and right
-  if (rightPressed && paddleX + 10 < canvas.width - paddleWidth - 14) {
-    paddleX += 14;
-  } else if (leftPressed && paddleX - 10 > 0 + 14) {
-    paddleX -= 14;
+  if (!(pause)) {
+    if (rightPressed && paddleX + 10 < canvas.width - paddleWidth - 14) {
+      paddleX += 14;
+    } else if (leftPressed && paddleX - 10 > 0 + 14) {
+      paddleX -= 14;
+    }
   }
   // ball hits sides of screen
   if (x + ballDirectionX > ((canvas.width - ballSize) - 40) ||
