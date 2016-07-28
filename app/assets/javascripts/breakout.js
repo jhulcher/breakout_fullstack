@@ -387,7 +387,7 @@ function drawLevel () {
 function drawPause () {
   ctx.font = "50px Imagine";
   ctx.fillStyle = "white";
-  ctx.fillText("PAUSE", 215, 316);
+  ctx.fillText("PAUSE", 230, 316);
 }
 
 function drawTitle () {
@@ -560,13 +560,13 @@ function draw () {
       }
   }
   // if ball is lost at bottom of screen
-  if ((y + ballDirectionY) > (canvas.height )) {
+  if ((y + ballDirectionY) > (canvas.height)) {
     noteMaker(10);
     x = 300;
     y = -11;
     lives -= 1;
-      if (lives > 0) {
-        var newValue = (Math.floor(Math.random() * 500) + 1);
+    if (lives > 0) {
+      var newValue = (Math.floor(Math.random() * 500) + 1);
       if (newValue < 70) {
             newValue = 70;
       } else if (newValue > 570) {
